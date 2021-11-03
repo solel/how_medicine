@@ -39,5 +39,22 @@ public class FindMedicine extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+
+        final Button button2 = findViewById(R.id.searchFood);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //String symtom = presentSymptom.getText().toString();
+                //String taking = takingMedications.getText().toString();
+                String desease = sickDisease.getText().toString();
+
+                // FindMedicineData로 값을 전달, 이동
+                Intent intent3 = new Intent(FindMedicine.this, FindFoodData.class);
+                //intent2.putExtra("symtom", symtom);
+                //intent2.putExtra("taking", taking);
+                intent3.putExtra("desease", desease);
+                startActivity(intent3);
+            }
+        });
     }
 }

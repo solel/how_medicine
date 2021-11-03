@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimePickerActivity">
+
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/time_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        android:hint="약 이름">
+    </EditText>
+
+    <RelativeLayout
+        android:id="@+id/time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/button_layout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:timePickerMode="spinner" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_layout"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/okBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="확인"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/week_layout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_layout"
+        app:layout_constraintBottom_toTopOf="@+id/week_layout2">
+
+
+        <CheckBox
+            android:id="@+id/cb_mon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cb_tue"
+            app:layout_constraintHorizontal_bias="0.5"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/cb_tue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="화요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cb_wed"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cb_mon"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/cb_wed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cb_tue"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/cb_thu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cb_fri"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/week_layout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/week_layout1"
+        app:layout_constraintBottom_toTopOf="@+id/button_layout">
+
+        <CheckBox
+            android:id="@+id/cb_fri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="금요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cb_sat"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintStart_toEndOf="@+id/cb_thu"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/cb_sat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="토요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cb_sun"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintStart_toEndOf="@+id/cb_fri"
+            tools:ignore="MissingConstraints" />
+
+        <CheckBox
+            android:id="@+id/cb_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일요일"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cb_mon"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.how_medicine" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.how_medicine">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -12,19 +15,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.How_medicine"
-        android:usesCleartextTraffic="true" >
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".MedicineLogActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AlarmMainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".FindFoodData"
+            android:exported="true" />
+        <activity
+            android:name=".Time"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".TimePickerActivity"
+            android:exported="true" />
+        <!--
         <activity
             android:name=".ListViewItem"
             android:exported="true" />
+        -->
         <activity android:name=".FindMedicineData" />
         <activity android:name=".FindMedicine" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

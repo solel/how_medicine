@@ -8,6 +8,7 @@
     android:padding="20dp"
     tools:context=".FindMedicine">
 
+
     <EditText
         android:id="@+id/presentSymptom"
         android:layout_width="0dp"
@@ -48,23 +49,33 @@
         app:layout_constraintVertical_bias="0.193" />
 
     <Button
+        android:id="@+id/searchFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="음식 검색"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchMedicine"
+        app:layout_constraintTop_toBottomOf="@+id/sickDisease"
+        app:layout_constraintVertical_bias="0.365" />
+
+    <Button
         android:id="@+id/searchMedicine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="검색"
-        app:backgroundTint="#D00DB5DF"
+        android:layout_marginLeft="20dp"
+        android:text="약 검색"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toStartOf="@id/searchFood"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sickDisease"
-        app:layout_constraintVertical_bias="0.307" />
+        app:layout_constraintVertical_bias="0.365" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="약 정보 검색하기"
+        android:text="본인 상태 입력"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/presentSymptom"
         app:layout_constraintEnd_toEndOf="parent"

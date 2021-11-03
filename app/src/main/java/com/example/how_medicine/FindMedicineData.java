@@ -1,17 +1,17 @@
 package com.example.how_medicine;
 
         import androidx.appcompat.app.AppCompatActivity;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
         import android.content.Intent;
+        import android.graphics.Color;
         import android.os.Bundle;
-        import android.text.method.ScrollingMovementMethod;
+        import android.text.Html;
         import android.util.Log;
-        import android.webkit.WebView;
-        import android.widget.ListView;
-        import android.widget.ScrollView;
-        import android.widget.TextView;
+        import android.view.View;
+        import android.widget.Button;
 
-        import org.w3c.dom.Text;
         import org.xmlpull.v1.XmlPullParser;
         import org.xmlpull.v1.XmlPullParserException;
         import org.xmlpull.v1.XmlPullParserFactory;
@@ -21,30 +21,45 @@ package com.example.how_medicine;
         import java.io.InputStreamReader;
         import java.net.MalformedURLException;
         import java.net.URL;
-        import java.util.List;
+        import java.util.ArrayList;
         import java.util.StringTokenizer;
+
 
 public class FindMedicineData extends AppCompatActivity {
 
     final static String TAG = "HealthProject";
 
-    //TextView medicine_text;
     String medicine_data;
-    private ListView listview;
-    private ListViewItem adapter;
+    String symtom;
+    String taking;
+    String desease;
 
+    RecyclerView mRecyclerView = null;
+    //RecyclerView mcRecyclerView = null;
+    MyRecyclerAdapter mRecyclerAdapter = null;
+    //MyRecyclerAdapter mcRecyclerAdapter = null;
+    ArrayList<MedicineItem> mMlist = new ArrayList<>();
+
+    ArrayList<MedicineItem> mCarefulList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_medicine_data);
 
-        //medicine_text = (TextView)findViewById(R.id.medicine_data_text);
-        //medicine_text.setMovementMethod(new ScrollingMovementMethod());
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_ok);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ListViewItem();   //adapter 생성
-        listview = (ListView) findViewById(R.id.listview);
-        listview.setAdapter(adapter);
+        mRecyclerAdapter = new MyRecyclerAdapter();
+        mRecyclerView.setAdapter(mRecyclerAdapter);
+
+        //mcRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_careful);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //mcRecyclerAdapter = new MyRecyclerAdapter();
+        //mcRecyclerView.setAdapter(new LinearLayoutManager(this);
+
+        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,true));
 
         new Thread(new Runnable() {
             @Override
@@ -60,47 +75,125 @@ public class FindMedicineData extends AppCompatActivity {
                     public void run() {
                         //medicine_text.setText(medicine_data);   // TextView에 문자열 data 출력
                         StringTokenizer st = new StringTokenizer(medicine_data,"\n\n");
+                        mMlist = new ArrayList<>();
+                        //mCarefulList = new ArrayList<>();
                         while(st.hasMoreTokens()) {
                             String tokenName = st.nextToken();
                             String tokenText = st.nextToken();
-                            for(int i=0; i<7; i++){
-                                st.nextToken();
-                            }
-                            Log.d("tokenName: ",tokenName);
-                            Log.d("tokenText: ",tokenText);
-                            adapter.addItem(tokenName, tokenText);
-                            adapter.notifyDataSetChanged();
-                        }
+                            String tokenEfficacy = st.nextToken();
+                            String tokenUse = st.nextToken();
+                            String tokenKnow1 = st.nextToken();
+                            String tokenKnow2 = st.nextToken();
+                            String tokenKnowMedi = st.nextToken();
+                            String tokenSideEffect = st.nextToken();
+                            String tokenKeep = st.nextToken();
 
+                            if(tokenKnow2.contains(desease)&&tokenKnowMedi.contains(taking)){
+                                mCarefulList.add(new MedicineItem(tokenText,tokenName, tokenEfficacy, tokenUse, tokenKnow1, tokenKnow2, tokenKnowMedi, tokenSideEffect, tokenKeep));
+                                continue;
+                            }
+                            else{
+                                mMlist.add(new MedicineItem(tokenText,tokenName, tokenEfficacy, tokenUse, tokenKnow1, tokenKnow2, tokenKnowMedi, tokenSideEffect, tokenKeep));
+                            }
+
+                            /*for(int i=0; i<7; i++){
+                                st.nextToken();
+                            }*/
+
+                            //mMlist.add(new MedicineItem(tokenEfficacy, tokenUse, tokenKnow1, tokenKnow2, tokenKnowMedi, tokenSideEffect, tokenKeep));
+                            //Log.d("tokenKeep: ",tokenKeep);
+                            //Log.d("tokenText: ",tokenText);
+                            //Log.d("After Adapter--->", String.valueOf(mMlist));
+                        }
+                        mRecyclerAdapter.setMedicineList(mMlist);
+                        //mcRecyclerAdapter.setMedicineList(mCarefulList);
+                        // 4. 커스텀 이벤트 리스너 객체를 생성하여 어댑터에 전달
+                        /*mRecyclerAdapter.setOnItemClickListener(new MyRecyclerAdapter.OnItemClickListener(){
+                            @Override
+                            public void onItemClick(View v, int position){
+                                // TODO : 아이템 클릭 이벤트를 MainActivity에서 처리.
+
+                                // FindMedicineData로 값을 전달, 이동
+                                Intent intent3 = new Intent(FindMedicineData.this, ResultMedicineData.class);
+                                intent2.putExtra("symtom", symtom);
+                                intent2.putExtra("taking", taking);
+                                intent2.putExtra("desease", desease);
+                                startActivity(intent2);
+                            }
+                        });*/
                     }
                 });
             }
+
         }).start();
+
+        /*final Button button = findViewById(R.id.badM);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button.setBackgroundColor(Color.WHITE);
+                // FindMedicineData로 값을 전달, 이동
+                Intent intent3 = new Intent(FindMedicineData.this, NotFindMedicineData.class);
+                intent3.putExtra("mCarefulList", mCarefulList);
+                intent3.putExtra("mMlist", mMlist);
+
+                startActivity(intent3);
+            }
+        });*/
+
+        final Button button_good = findViewById(R.id.goodM);
+        final Button button_bad = findViewById(R.id.badM);
+        button_good.setBackgroundColor(Color.parseColor("#E4F9FF"));
+
+
+        button_good.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mRecyclerAdapter = new MyRecyclerAdapter();
+                //mRecyclerView.setAdapter(mRecyclerAdapter);
+                mRecyclerAdapter.setMedicineList(mMlist);
+                button_good.setBackgroundColor(Color.parseColor("#E4F9FF"));
+                button_bad.setBackgroundColor(Color.parseColor("#12CAD6"));
+            }
+        });
+
+        button_bad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mRecyclerAdapter = new MyRecyclerAdapter();
+                //mRecyclerView.setAdapter(mRecyclerAdapter);
+                mRecyclerAdapter.setMedicineList(mCarefulList);
+                button_bad.setBackgroundColor(Color.parseColor("#E4F9FF"));
+                button_good.setBackgroundColor(Color.parseColor("#12CAD6"));
+            }
+        });
+
     }
+
+    /*public String stripHtml(String html){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString().replaceAll("\n", "").trim();
+        } else {
+            return Html.fromHtml(html).toString().replaceAll("\n", "").trim();
+        }
+    }*/
 
     // xml parsing part
     String getMedicineXmlData(){
         StringBuffer buffer = new StringBuffer();
 
+        String st;
+
         Intent intent2 = getIntent();
 
-        //Bundle bundle = intent2.getExtras();
-        //String symtom = bundle.getString("symtom");
-        //String taking = bundle.getString("taking");
-        //String desease = bundle.getString("desease");
+        symtom = intent2.getStringExtra("symtom");
+        taking = intent2.getStringExtra("taking");
+        desease = intent2.getStringExtra("desease");
 
-        String symtom = intent2.getStringExtra("symtom");
-        String taking = intent2.getStringExtra("taking");
-        String desease = intent2.getStringExtra("desease");
-
-        /*TextView ex_text;
-        ex_text = (TextView) findViewById(R.id.ex1);
-        ex_text.setText(taking);*/
-
-        String numOfRows = "4";
+        String numOfRows = "10";
         String serviceKey = "Xr1vjtjg%2FE5kyZjOZieNDg%2FcbJbEdg6XVqp1KoAZAThKmfRUYg%2BZDyPmQ7l5OJTZnpiqVglcHvdTLBsyrXhvXA%3D%3D";
 
-        String queryUrl = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?efcyQesitm="+symtom+"&numOfRows=10"+"&ServiceKey="+serviceKey;
+        String queryUrl = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?efcyQesitm="+symtom+"&numOfRows="+numOfRows+"&ServiceKey="+serviceKey;
         try {
             URL url = new URL(queryUrl);    // 문자열로 된 요청 url을 URL 객체로 생성
             InputStream is = url.openStream();  // url위치로 입력스트림 연결
@@ -130,49 +223,106 @@ public class FindMedicineData extends AppCompatActivity {
                         else if(tag.equals("entpName")) {
                             buffer.append("업체명 : ");
                             xpp.next();
+                            //Log.d("using method: ",xpp.getText());
                             buffer.append(xpp.getText());
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("efcyQesitm")) {
                             buffer.append("효능 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                buffer.append("없음");
+                            }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("efficient: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("useMethodQesitm")) {
                             buffer.append("사용법 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                //if(android.text.Html.escapeHtml(xpp.getText()).toString()==null){
+                                buffer.append("없음");
+                           }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("using method_문자: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("atpnWarnQesitm")) {
                             buffer.append("주의사항경고 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                //if(android.text.Html.escapeHtml(xpp.getText()).toString()==null){
+                                buffer.append("없음");
+                                //Log.d("careful_널: ","ㅓㅘㅗㅓㅏㅗㅓㅏ");
+                            }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("careful_문자: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("atpnQesitm")) {
                             buffer.append("주의사항 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                //if(android.text.Html.escapeHtml(xpp.getText()).toString()==null){
+                                buffer.append("없음");
+                            }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("careful2: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("intrcQesitm")) {
                             buffer.append("주의해야할 약, 음식 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                //if(android.text.Html.escapeHtml(xpp.getText()).toString()==null){
+                                buffer.append("없음");
+                            }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("food: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("seQesitm")) {
                             buffer.append("부작용 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                //if(android.text.Html.escapeHtml(xpp.getText()).toString()==null){
+                                buffer.append("없음");
+                            }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("problem: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         else if(tag.equals("depositMethodQesitm")) {
                             buffer.append("보관법 : ");
                             xpp.next();
-                            buffer.append(xpp.getText());
+                            if(xpp.getText()==null){
+                                //if(android.text.Html.escapeHtml(xpp.getText()).toString()==null){
+                                buffer.append("없음");
+                            }
+                            else{
+                                st=xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "  ");
+                                buffer.append(st);
+                                //Log.d("problem: ",st);
+                            }
                             buffer.append("\n\n");
                         }
                         break;

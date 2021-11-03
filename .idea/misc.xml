@@ -3,11 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.1421875" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/drawable/bottonshape2.xml" value="0.21927083333333333" />
+        <entry key="app/src/main/res/drawable/button_color_drawable.xml" value="0.21927083333333333" />
+        <entry key="app/src/main/res/drawable/buttonshape.xml" value="0.21927083333333333" />
+        <entry key="app/src/main/res/layout/activity_alarm_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_find_food_data.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/activity_find_medicine.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/layout/activity_find_medicine_data.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_list_view_item.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_list_view_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_medicine_data.xml" value="0.18645833333333334" />
+        <entry key="app/src/main/res/layout/activity_medicine_log.xml" value="0.1259259259259259" />
+        <entry key="app/src/main/res/layout/activity_not_find_medicine_data.xml" value="0.19166666666666668" />
+        <entry key="app/src/main/res/layout/activity_result_medicine_data.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/activity_time_picker.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_recycler.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_recycler_ex.xml" value="0.1265625" />
+        <entry key="app/src/main/res/layout/item_recycler_food.xml" value="0.1703125" />
+        <entry key="app/src/main/res/layout/round_theme.xml" value="0.1" />
       </map>
     </option>
   </component>
